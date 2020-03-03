@@ -20,12 +20,13 @@ class Container
      *
      * @param $name
      * @param $arguments
+     * @param mixed $method
      *
      * @return mixed
      */
-    public static function __callStatic($name, $arguments)
+    public static function __callStatic($method, $arguments)
     {
-        return call_user_func_array([static::single(), $name], $arguments);
+        return call_user_func_array([static::single(), $method], $arguments);
     }
 
     /**
@@ -33,12 +34,13 @@ class Container
      *
      * @param $name
      * @param $arguments
+     * @param mixed $method
      *
      * @return mixed
      */
-    public function __call($name, $arguments)
+    public function __call($method, $arguments)
     {
-        return call_user_func_array([static::single(), $name], $arguments);
+        return call_user_func_array([static::single(), $method], $arguments);
     }
 
     /**
