@@ -1,0 +1,28 @@
+{
+    "name": "zeni18/container",
+    "description": "IOC容器管理",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "zeni18",
+            "email": "hi.zero.im@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "psr/container": "^1.0@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "zeni18\\container\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "tests\\": "tests"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    }
+}
