@@ -43,4 +43,13 @@ class ContainerTest extends TestCase
 
         $this->assertEquals($msg, Container::callMethod(App::class, "spider"));
     }
+
+    public function testInstance()
+    {
+        Container::instance("phpunit", $this);
+
+        $this->assertEquals($this, Container::make("phpunit"));
+
+    }
+
 }

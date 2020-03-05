@@ -36,6 +36,15 @@ class Core
 
     /**
      * @param $name
+     * @param $object
+     */
+    public function instance($name, $object)
+    {
+        $this->instances[$name] = $object;
+    }
+
+    /**
+     * @param $name
      *
      * @return mixed
      */
