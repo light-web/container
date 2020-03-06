@@ -220,6 +220,18 @@ class Core implements \ArrayAccess
     }
 
     /**
+     * @param ServiceProviderInterface $provider
+     *
+     * @return $this
+     */
+    public function register(ServiceProviderInterface $provider)
+    {
+        $provider->register($this);
+
+        return $this;
+    }
+
+    /**
      * 获得实例实现.
      *
      * @param $name  创建实例方式：类名或者闭包
