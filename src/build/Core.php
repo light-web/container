@@ -8,7 +8,7 @@ use ReflectionClass;
 /**
  * Class Container Core.
  */
-class Core
+class Core implements \ArrayAccess
 {
     /**
      * @var array
@@ -19,6 +19,40 @@ class Core
      * @var array
      */
     public $instances = [];
+
+    /**
+     * @var array
+     */
+    public $items = [];
+
+    /**
+     * @param $name
+     *
+     * @return null|mixed
+     */
+    public function __get($name)
+    {
+        if (isset($this->instances[$name])) {
+            return $this->instances[$name];
+        }
+        if (isset($this->bindings[$name])) {
+            return $this->make($name);
+        }
+        if (isset($this->items[$name])) {
+            return $this->items[$name];
+        }
+
+        return null;
+    }
+
+    /**
+     * @param $name
+     * @param $value
+     */
+    public function __set($name, $value)
+    {
+        $this->offsetSet($name, $value);
+    }
 
     /**
      * @param $name
@@ -142,6 +176,47 @@ class Core
         $dependencies = $this->getDependencies($parameters);
 
         return $reflectMethod->invokeArgs($this->build($class), $dependencies);
+    }
+
+    /**
+     * @param mixed $offset
+     *
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return array_key_exists($offset, $this->items);
+    }
+
+    /**
+     * @param mixed $offset
+     *
+     * @return mixed
+     */
+    public function offsetGet($offset)
+    {
+        return $this->items($offset);
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
+    public function offsetSet($offset, $value)
+    {
+        if (is_null($offset)) {
+            $this->items[] = $value;
+        } else {
+            $this->items[$offset] = $value;
+        }
+    }
+
+    /**
+     * @param mixed $offset
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->items[$offset]);
     }
 
     /**
